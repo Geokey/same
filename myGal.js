@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	// проверка на наличие картинок  
+	// проверка есть ли картинки, иначе ставим заглушку
 	if ($('#img_prev img').is('#img_prev img')) {
 
 		$("#img_prev a").click(function(event){ 
@@ -13,6 +13,10 @@ $(document).ready(function() {
 				 
 				// замена src у большой картинки на href от превью
 				$bigImg.attr('src' , $imgPath);
+				
+				// скрываем картинку до появления но не полностью, чтобы было видно как загружается если большая
+				$bigImg.css('opacity': 0.2);
+				
 				// анимация появления
 				$bigImg.load(function(){
 				    $bigImg.fadeIn(100);
