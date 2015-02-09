@@ -1,24 +1,35 @@
-$(document).ready(function() {
-	if ($('#img_prev img').is('#img_prev img')) {
-		$("#img_prev a").click(function(evt){ 
-			evt.preventDefault(); 
-			if ($(this).attr('href') != $('photo img').attr('src')) {
-			var imgPath = $(this).attr('href'); 
-			var oldImg = $("#photo img"); 
-			var newImg = $("<img src='" + imgPath + "'>"); 
-			oldImg.remove();
-			$("#photo").prepend(newImg);
-			oldImg.css({opacity: 0})
-			$('#photo img').load(function(){
-			$('#photo img').fadeIn(100);
-			});
-
-		};
-
-	}); 
-		$("#img_prev a:first").click();
-	} else{
-		$('#photo').html('<img src="assets/templates/base/noimage.jpg">');
-	};
-
-}); //   *** END ***
+$(document).ready(function(){
+	var $photo = $('#photo');
+	
+	//проверка на наличие превью, вывод заглушки при отсутствии
+	if ($('#img_prev img').is('#img_prev img')){
+		//При клике по ссылке с превьюшкой
+		$("#img_prev a").on('click', function(event){
+			var $this = $(this),
+				newImgSrc = $this.attr('href'),
+				$oldImg = $photo.find('img');
+			
+			event.preventDefault();
+			
+			//Если текущая не активна
+			if (newImgSrc != $oldImg.attr('src')){
+				var $newImg = $('<img />');
+				
+				$newImg.on('load', function(){
+					//
+					$oldImg.fadeOut(300, function(){
+						$oldImg.remove();
+						$photo.prepend($newImg);
+						
+						$newImg.fadeIn(1000);
+					});
+				}).css({opacity: 0}).attr('src', newImgSrc);
+			}
+		});
+		
+		$("#img_prev a:first").trigger('click');
+	}else{
+		$photo.html('<img src="assets/templates/base/noimage.jpg">');
+	}
+});
+// END
