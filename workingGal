@@ -1,0 +1,30 @@
+// суть в том, что хотелось бы сделать замену атрибутов как я накидал в myGal.js - но вновь где то протупил
+
+$(document).ready(function() {
+	// есть ли картинки
+	if ($('#img_prev img').is('#img_prev img')) {
+
+		$("#img_prev a").click(function(evt){ 
+			evt.preventDefault(); 
+			if ($(this).attr('href') != $('photo img').attr('src')) {
+				var imgPath = $(this).attr('href'); 
+				var oldImg = $("#photo img"); 
+				var newImg = $("<img src='" + imgPath + "'>"); 
+				oldImg.remove();
+				oldImg.css({opacity: 0})
+				$("#photo").prepend(newImg);
+
+				$('#photo img').load(function(){
+					$('#photo img').fadeIn(100);
+				});
+
+		};
+
+	}); 
+		$("#img_prev a:first").trigger('click');
+	} else{
+		// заглушка, если нет картинок
+		$('#photo').html('<img src="assets/templates/base/noimage.jpg">');
+	};
+
+}); //   *** END ***
