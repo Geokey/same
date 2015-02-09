@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	// проверка есть ли картинки, иначе ставим заглушку
+	// проверка на наличие картинок
 	if ($('#img_prev img').is('#img_prev img')) {
 
 		$("#img_prev a").click(function(event){ 
